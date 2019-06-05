@@ -1,0 +1,13 @@
+FROM centos:7
+ENV container docker
+RUN yum -y groupinstall "Development Tools"
+RUN yum -y install ncurses-devel git-core
+RUN git clone --depth 1 https://github.com/vim/vim
+WORKDIR /vim
+
+RUN ./configure --prefix=/usr --with-features=huge --enable-multibyte --with-python-config-dir=/usr/lib/python2.7/config --enable-pythoninterp=yes
+
+RUN make
+RUN make install
+
+CMD ["/usr/bin/vim", "--version"]
